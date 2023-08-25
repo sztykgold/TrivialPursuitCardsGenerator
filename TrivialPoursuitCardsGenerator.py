@@ -27,7 +27,8 @@ global_spacing = 4
 trivial_font = ImageFont.truetype("arial.ttf", 11)
 skijijo_big_font = ImageFont.truetype("arial.ttf", 36)
 skijijo_small_font = ImageFont.truetype("arial.ttf", 16)
-global_nb_questions_to_generate = 30
+global_nb_questions_to_generate = 50
+
 
 # permet un retour à la ligne si on excède la largeur de la carte
 def break_fix(text, width, font, draw):
@@ -63,11 +64,15 @@ def fit_text(img, text, color, font, xy):
     return y
 
 # Fonction pour générer une carte aléatoire
-def generate_card():
+def generate_card(use_random=True,question_number=0):
     card_questions = []
     card_reponses = []
     for c in categories :
-        q = random.choice(questions[c])
+        if use_random :
+            q = random.choice(questions[c])
+        else:
+            q = questions[c][question_number%len(questions[c])]
+
         card_questions.append(q['question'])
         card_reponses.append(q['answer'])
     return {
@@ -103,7 +108,7 @@ def create_game_card(card, show_answer=True):
 #skijijo cards contains only one question centered in card
 def create_skijijo_card(card):
     # Création de l'image
-    img = Image.new('RGB', (global_width, global_height), color='grey')
+    img = Image.new('RGB', (global_width, global_height), color='snow')
 
     # Création de l'objet Draw pour dessiner sur l'image
     draw = ImageDraw.Draw(img)
@@ -113,15 +118,15 @@ def create_skijijo_card(card):
         placement = (5,110)
         font = skijijo_small_font
     else :
-        placement = (70 -question_lenght*7 , 115-5*question_lenght)
-        font = ImageFont.truetype("arial.ttf", 80-5*question_lenght)
+        placement = (73 -question_lenght*6 , 115-5*question_lenght)
+        font = ImageFont.truetype("arial.ttf", 75-5*question_lenght)
     fit_text(img, card['questions'][0], 'blue', font, placement)
 
     return img
 
-# Génération de 10 cartes aléatoires
+# Génération de cartes aléatoires
 for i in range(global_nb_questions_to_generate):
-    card = generate_card()
+    card = generate_card(False,i)
     #img = create_game_card(card, i%2==0)
     img = create_skijijo_card(card)
     img.save(f"carte_{i+1}.jpg")
