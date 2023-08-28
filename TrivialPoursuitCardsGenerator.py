@@ -2,16 +2,25 @@ import random, csv
 from PIL import Image, ImageDraw, ImageFont
 
 # Categories colors
-colors = ['orange','blue','red','green','brown','white']
-
+colors = ['orange','blue','red','green','brown','yellow']
+bg_color = 'snow' #'Honeydew' #'snow' # 'grey'
 categories = []
 questions = dict()
 
 def category_color(category_name):
     return colors[categories.index(category_name) % len(colors)]
 
-# read questions in csv file named "questions.csv"
-with open('questions.csv','r',encoding="utf8") as csvfile :
+global_width, global_height = 180, 255
+global_spacing = 4
+trivial_font = ImageFont.truetype("arial.ttf", 10)
+skyjo_big_font = ImageFont.truetype("arial.ttf", 36)
+skyjo_small_font = ImageFont.truetype("arial.ttf", 16)
+global_nb_questions_to_generate = 64
+questions_filename='Periode 1 - questions trivialPursuit.csv'
+
+
+# read questions in csv file named questions_filename
+with open(questions_filename,'r',encoding="utf8") as csvfile :
     question_reader = csv.reader(csvfile, delimiter=',')
     next(question_reader)
     for question_row in question_reader :
@@ -21,13 +30,6 @@ with open('questions.csv','r',encoding="utf8") as csvfile :
             questions[category_name] = []
 
         questions[category_name].append({'question' : question_row[1].replace('*','\N{MULTIPLICATION SIGN}'),'answer' : question_row[2]},)        
-
-global_width, global_height = 180, 255
-global_spacing = 4
-trivial_font = ImageFont.truetype("arial.ttf", 11)
-skijijo_big_font = ImageFont.truetype("arial.ttf", 36)
-skijijo_small_font = ImageFont.truetype("arial.ttf", 16)
-global_nb_questions_to_generate = 50
 
 
 # permet un retour à la ligne si on excède la largeur de la carte
@@ -39,13 +41,13 @@ def break_fix(text, width, font, draw):
     while lo < hi:
         mid = (lo + hi + 1) // 2
         t = text[:mid]
-        w, h = draw.textsize(t, font=font)
+        _, _, w, h = draw.textbbox((0,0),t, font=font)
         if w <= width:
             lo = mid
         else:
             hi = mid - 1
     t = text[:lo]
-    w, h = draw.textsize(t, font=font)
+    _, _, w, h = draw.textbbox((0,0), t, font=font)
     yield t, w, h
     yield from break_fix(text[lo:], width, font, draw)
 
@@ -81,9 +83,9 @@ def generate_card(use_random=True,question_number=0):
     }
 
 # Création d'une image de carte du jeu
-def create_game_card(card, show_answer=True):
+def create_trivialPursuit_card(card, show_answer=True):
     # Création de l'image
-    img = Image.new('RGB', (global_width, global_height), color='grey')
+    img = Image.new('RGB', (global_width, global_height), color=bg_color)
 
     # Création de l'objet Draw pour dessiner sur l'image
     draw = ImageDraw.Draw(img)
@@ -92,7 +94,7 @@ def create_game_card(card, show_answer=True):
     number = 0
     for c in categories :
         # Ajout de la catégorie et de la question
-        line = global_spacing + fit_text(img, c + ' : ' + card['questions'][number], category_color(c), trivial_font, (5, line))
+        line = global_spacing + fit_text(img, card['questions'][number], category_color(c), trivial_font, (5, line)) # removed category to gain space c + ' : ' + 
         number += 1
     number = 0
     if show_answer :
@@ -105,8 +107,8 @@ def create_game_card(card, show_answer=True):
 
     return img
 
-#skijijo cards contains only one question centered in card
-def create_skijijo_card(card):
+#skyjo cards contains only one question centered in card
+def create_skyjo_card(card):
     # Création de l'image
     img = Image.new('RGB', (global_width, global_height), color='snow')
 
@@ -116,7 +118,7 @@ def create_skijijo_card(card):
     question_lenght = len(card['questions'][0])
     if question_lenght > 13 :
         placement = (5,110)
-        font = skijijo_small_font
+        font = skyjo_small_font
     else :
         placement = (73 -question_lenght*6 , 115-5*question_lenght)
         font = ImageFont.truetype("arial.ttf", 75-5*question_lenght)
@@ -126,7 +128,7 @@ def create_skijijo_card(card):
 
 # Génération de cartes aléatoires
 for i in range(global_nb_questions_to_generate):
-    card = generate_card(False,i)
-    #img = create_game_card(card, i%2==0)
-    img = create_skijijo_card(card)
+    card = generate_card(True,i)
+    img = create_trivialPursuit_card(card)
+    #img = create_skyjo_card(card)
     img.save(f"carte_{i+1}.jpg")

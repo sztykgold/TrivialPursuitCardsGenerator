@@ -1,26 +1,12 @@
 Catégorie,Question,Réponse
 Géométrie,Quelle est la formule d'aire d'un triangle rectangle ?,L * l / 2
-Histoire,Date de la bataille de Marignan,1515
-Calcul,Calculer la division euclidienne de 13 par 5,13=5*2+3
-Français,Conjuguer le verbe être à l'imparfait,"j'étais, tu étais, il était, nous étions, vous étiez, ils étaient"
-Géographie,Quel est le plus grand pays du monde ?,La Russie
 Géométrie,Quelle est la formule d'aire d'un disque ?,Pi * R * R
-Histoire,Quand débute l'antiquité ?,À la découverte de l'écriture
-Calcul,"Combien font 4,5*8 ?",36
-Français,Orthographe du mot orthographe,Orthographe
-Géographie,Quel est la capitale de l'Angleterre ?,Londres
-Calcul,Combien font les 13/5 de 10 ?,26
-Calcul,Peut on diviser par 0 ?,NON
-Calcul,Récite la table des 9 à l'envers,"90,81,72,63,54,45,36,2718,9"
-Histoire,En quelle année a-t-on découvert les amériques ?,1492
-Histoire,Quel événement a eu lieu en 1789 ?,La révolution française
-Histoire,Quelles sont les dates de la seconde guerre mondiale ?,1939-1945
-Français,Conjugue le verbe partir au passé simple,"Je partis, tu partis il partit, nous partîmes, vous partîtes ils partirent"
-Français,"Quel est l'adjectif dans la phrase ""la voiture est bleue"" ?",bleue
-Français,"Qui a écrit ""L'avare""",Molière
-Géographie,Quel est le plus long fleuve de France ?,La loire
-Géographie,Quelle est la capitale de l'italie ?,Rome
-Géographie,L'espagne est elle membre de l'union européenne ?,Oui
 Géométrie,Quelle est la définition d'un rectangle ?,C'est un quadrilatère qui a 4 angles droits
 Géométrie,Quelle propriété ont les diagonales d'un rectangle ?,Elles sont de même longueur
 Géométrie,Quelle est la formule du périmètre d'un cercle ?,2*Pi*R
+Calcul,Calculer la division euclidienne de 13 par 5,13=5*2+3
+Calcul,Combien font les 13/5 de 10 ?,26
+Calcul,Peut on diviser par 0 ?,NON
+Calcul,Récite la table des 9 à l'envers,"90,81,72,63,54,45,36,27,18,9"
+Calcul,"Combien font 4,5*8 ?",36
+
